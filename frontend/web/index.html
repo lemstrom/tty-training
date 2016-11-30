@@ -36,8 +36,8 @@
 		app.controller("pageCtrl", function($scope, $http) {
 			/*
 			 * Modifications of this list will automatically update on the page
-			 */
-			$scope.orders = ["Bluetooth Headphones", "Christmas Gift"];
+			 
+			$scope.orders = ["Bluetooth Headphones", "Christmas Gift"];*/
 
 			/*
 			 * Documentation https://docs.angularjs.org/api/ng/service/$http
@@ -45,9 +45,11 @@
 			$scope.addItem = function () {
 				var data = $scope.textInput;
 
-				$http.post(window.location.href+'interface/', data);
+				$http.post(window.location.href+'interface/', data).success(function(data) {
+					$scope.textInput = "";
 
-				$scope.textInput = "";
+					$scope.fetchItems();
+				});
 			}
 
 			$scope.fetchItems = function () {
@@ -71,6 +73,8 @@
 					$scope.orders = newRows;
 				});
 			}
+
+			$scope.fetchItems();
 		});
 		</script>
 </body>
